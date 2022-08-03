@@ -25,11 +25,19 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:time", function (req, res) {
   let time = req.params.time;
-  let date = new Date(time);
+  let date;
+
+  if (!Number.isNaN(parseInt(Number(time)))) {
+    date = new Date(Number(time));
+  } else {
+    date = new Date(time);
+  }
+
   if (date == "Invalid Date") {
+    console.log(date, time, Number.isInteger(time));
     res.json({ error: "Invalid date" });
   } else {
-    res.json({ unix: Math.round(date.getTime() / 1000), utc: date });
+    res.json({ unix: date.getTime(), utc: date });
   }
 });
 
