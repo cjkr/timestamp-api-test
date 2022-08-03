@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   let date = new Date();
-  res.json({ unix: Math.round(date.getTime() / 1000), utc: date });
+  res.json({ unix: Math.round(date.getTime()), utc: date.toUTCString() });
 });
 
 router.get("/:time", function (req, res) {
@@ -20,7 +20,7 @@ router.get("/:time", function (req, res) {
     console.log(date, time, Number.isInteger(time));
     res.json({ error: "Invalid date" });
   } else {
-    res.json({ unix: date.getTime(), utc: date });
+    res.json({ unix: date.getTime(), utc: date.toUTCString() });
   }
 });
 
